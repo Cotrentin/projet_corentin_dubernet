@@ -6,6 +6,24 @@ ob_start();
 
 <?php require('../TP_9/model/pdo.php'); ?>
 
+<?php
+
+$libelle_matiere = "Informatique";
+
+$query = "INSERT INTO matiere (lib) VALUES (:libelle)";
+$stmt = $dbPDO->prepare($query);
+
+$stmt->execute([
+    'libelle' => $libelle_matiere
+]);
+
+if($stmt->rowCount() > 0) {
+    echo "Matière ajoutée avec succès!";
+} else {
+    echo "Erreur lors de l'ajout de la matière.";
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
