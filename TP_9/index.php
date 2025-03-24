@@ -2,26 +2,12 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 ob_start();
-?>
 
-<?php require('../TP_9/model/pdo.php'); ?>
+require('config.php');
+require(chemin . 'model/pdo.php');
+require(chemin . 'views/nouvelle_etudiant.php');
+require(chemin . 'views/nouvelle_matiere.php');
 
-<?php
-
-$libelle_matiere = "Informatique";
-
-$query = "INSERT INTO matiere (lib) VALUES (:libelle)";
-$stmt = $dbPDO->prepare($query);
-
-$stmt->execute([
-    'libelle' => $libelle_matiere
-]);
-
-if($stmt->rowCount() > 0) {
-    echo "Matière ajoutée avec succès!";
-} else {
-    echo "Erreur lors de l'ajout de la matière.";
-}
 ?>
 
 <!DOCTYPE html>
@@ -61,6 +47,19 @@ if($stmt->rowCount() > 0) {
     </style>
 </head>
 <body>
+
+<div class="section">
+    <form action="Views/nouvelle_matiere.php" method="POST">
+        <div>
+            <label for="libelle">Libellé:</label>
+            <input type="text" id="libelle" name="libelle" required>
+        </div>
+        <div style="margin-top: 10px;">
+            <button type="submit">Valider</button>
+        </div>
+    </form>
+</div>
+
     <h1>Affichage de l'ecole</h1>
     
     <div class="section">
