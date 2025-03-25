@@ -63,22 +63,35 @@ require(chemin . 'views/nouvelle_matiere.php');
     <h1>Affichage de l'ecole</h1>
     
     <div class="section">
-        <h2>Liste des étudiants</h2>
-        <ul>
+    <h2>Liste des étudiants</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
             <?php
-            $query_etudiants = "SELECT prenom, nom FROM etudiants ORDER BY nom, prenom";
+            $query_etudiants = "SELECT id, prenom, nom FROM etudiants ORDER BY nom, prenom";
             $result_etudiants = $dbPDO->query($query_etudiants);
             
             if ($result_etudiants && $result_etudiants->rowCount() > 0) {
                 while ($row = $result_etudiants->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<li>" . htmlspecialchars($row["prenom"]) . " " . htmlspecialchars($row["nom"]) . "</li>"; 
+                    echo "<tr>";
+                    echo "<td>" . htmlspecialchars($row["prenom"]) . "</td>"; 
+                    echo "<td>" . htmlspecialchars($row["nom"]) . "</td>";
+                    echo "<td><a href='views/modif_etudiant.php?id=" . $row["id"] . "'>Modifier</a></td>";
+                    echo "</tr>"; 
                 }
             } else {
-                echo "<p>Aucun étudiant trouvé.</p>";
+                echo "<tr><td colspan='3'>Aucun étudiant trouvé.</td></tr>";
             }
             ?>
-        </ul>
-    </div>
+        </tbody>
+    </table>
+</div>
     
     <div class="section">
         <h2>Liste des classes</h2>
