@@ -3,10 +3,13 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 ob_start();
 
-require('config.php');
-require(chemin . 'model/pdo.php');
-require(chemin . 'views/nouvelle_etudiant.php');
-require(chemin . 'views/nouvelle_matiere.php');
+require_once('config.php');
+require_once(chemin . 'model/pdo.php');
+require_once(chemin . 'views/nouvelle_etudiant.php');
+require_once(chemin . 'views/nouvelle_matiere.php');
+
+
+
 
 ?>
 
@@ -73,6 +76,7 @@ require(chemin . 'views/nouvelle_matiere.php');
             </tr>
         </thead>
         <tbody>
+
             <?php
             $query_etudiants = "SELECT id, prenom, nom FROM etudiants ORDER BY nom, prenom";
             $result_etudiants = $dbPDO->query($query_etudiants);
@@ -82,7 +86,10 @@ require(chemin . 'views/nouvelle_matiere.php');
                     echo "<tr>";
                     echo "<td>" . htmlspecialchars($row["prenom"]) . "</td>"; 
                     echo "<td>" . htmlspecialchars($row["nom"]) . "</td>";
-                    echo "<td><a href='views/modif_etudiant.php?id=" . $row["id"] . "'>Modifier</a></td>";
+                    echo "<td>
+                        <a href='views/modif_etudiant.php?id=" . $row["id"] . "'>Modifier</a> | 
+                         <a href='views/suppression_etudiant.php?id=" . $row["id"] . "' onclick='return confirm(\"Êtes-vous sûr de vouloir supprimer cet étudiant ?\");'>Supprimer</a>
+</td>";
                     echo "</tr>"; 
                 }
             } else {
